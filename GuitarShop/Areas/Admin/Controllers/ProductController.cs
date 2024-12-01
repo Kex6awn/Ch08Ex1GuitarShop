@@ -92,15 +92,19 @@ namespace GuitarShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string userMessage = "";
                 if (product.ProductID == 0)           // new product
                 {
                     context.Products.Add(product);
+                    userMessage = "You just added a product " + product.Name;
                 }
                 else                                  // existing product
                 {
                     context.Products.Update(product);
+                    userMessage = "You just updated a product " + product.Name;
                 }
                 context.SaveChanges();
+                TempData["UserMessage"] = userMessage;
                 return RedirectToAction("List");
             }
             else
